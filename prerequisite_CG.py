@@ -30,6 +30,7 @@ class Source(object):
 
     def main(self, df):
         df1 = pd.read_csv("Prerequisite_CG.csv")
+        df2=pd.read_csv("Negative_Prerequisite_CG.csv")
         for ind in df.index:
          # if df["Exam"][ind] == "11th CBSE":
             # break
@@ -48,10 +49,13 @@ class Source(object):
                 # print(response1.json()["Topic"])
                 if response1.json()["Topic"] == []:
                     print("\t\tNO TOPICS FOR ABOVE LEARN PATH ID\n")
-                    df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
+                    df2.loc[len(df2)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
                                          df["Grade"][ind], df["Learnpath_name"][ind], "",
-                                         format_refrence, "",
+                                         format_refrence, "no topic for this learn path",
                                          "", ""]
+                    df2.drop_duplicates()
+                    df2.to_csv("Negative_Prerequisite_CG.csv",index=False)
+
                 else:
                     for topic in response1.json()["Topic"]:
                         print("\n")
@@ -70,32 +74,50 @@ class Source(object):
                                 learnpath_name2 = (item["learnpath_name"])
                                 LIST = []
                                 LIST = learnpath_name2.split('--')
-                                title = LIST[len(LIST) - 1]
-                                sequence = item["sequence"]
-                                i = int(0)
-                                for count in item["concepts"]:
-                                    i += 1
-                                concept_count = i
-                                df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
+                                res = ''.join(filter(lambda i: i.isdigit(), LIST[1]))
+                                if res=="":
+                                   title = LIST[len(LIST) - 1]
+                                   sequence = item["sequence"]
+                                   i = int(0)
+                                   for count in item["concepts"]:
+                                      i += 1
+                                   concept_count = i
+                                   df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
                                                      df["Grade"][ind], df["Learnpath_name"][ind], title,
                                                      format_refrence, learnpath_name2,
                                                      concept_count, sequence]
-                                df1.to_csv("Prerequisite_CG.csv", index=False)
+                                   df1.drop_duplicates()
+                                   df1.to_csv("Prerequisite_CG.csv", index=False)
+                                elif int(res)>=6:
+                                    title = LIST[len(LIST) - 1]
+                                    sequence = item["sequence"]
+                                    i = int(0)
+                                    for count in item["concepts"]:
+                                        i += 1
+                                    concept_count = i
+                                    df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
+                                                         df["Grade"][ind], df["Learnpath_name"][ind], title,
+                                                         format_refrence, learnpath_name2,
+                                                         concept_count, sequence]
+                                    df1.drop_duplicates()
+                                    df1.to_csv("Prerequisite_CG.csv", index=False)
+                                else:
+                                    continue
 
                         else:
                             print("\t\tNO PREREQUISITES FOR TOPIC  :", topic["name"], "\n")
-                            df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
+                            df2.loc[len(df2)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
                                                  df["Grade"][ind], df["Learnpath_name"][ind], "",
                                                  format_refrence, learnpath_name,
-                                                 "", ""]
-                            df1.to_csv("Prerequisite_CG.csv", index=False)
+                                                 "no prerequisite for some topic in this learnpath", ""]
+                            df2.to_csv("Negative_Prerequisite_CG.csv", index=False)
             except Exception as e:
                 print(traceback.format_exc())
-                df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
+                df2.loc[len(df2)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
                                      df["Grade"][ind], df["Learnpath_name"][ind], "",
-                                     format_refrence, "",
+                                     format_refrence, e,
                                      "", ""]
-                df1.to_csv("Prerequisite_CG.csv", index=False)
+                df2.to_csv("Negative_Prerequisite_CG.csv", index=False)
 
             # else:
             #     continue
@@ -136,7 +158,9 @@ def prerequisite_cg(df):
                                 'Title', 'Format_refrence'
         , 'Topic_learnpath_name', "Concept_count", "Sequence"])
     df1.to_csv("Prerequisite_CG.csv", index=False)
-
+    df123=pd.read_csv("Prerequisite_CG.csv")
+    df11=pd.DataFrame(columns=df123.columns.values)
+    df11.to_csv("Negative_Prerequisite_CG.csv",index=False)
     src.main(df)
 
 # df = pd.read_csv("positive_learn_results.csv")

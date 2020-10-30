@@ -51,6 +51,7 @@ class Source(object):
                         if item["content"]["key_attributes"]["type"] == "Topic Explainer" or \
                                 item["content"]["key_attributes"][
                                     "type"] == "Solved Problems asked in exams":
+                            TYPE=item["content"]["key_attributes"]["type"]
                             sequence = item["content"]["sequence"]
                             print("\n")
                             print("SEQUENCE DICTIONARY :", sequence)
@@ -85,14 +86,14 @@ class Source(object):
                                                 print("CHAPTER LEARNPATH NAME :", learnpath_name1, "\n")
                                                 print("LEARN PATH WHICH GAVE ERROR :", learnpath_name)
                                                 print(traceback.format_exc())
-                                                df1.loc[len(df1)] = [df["Child_ID"][ind], df["Exam"][ind],
+                                                df2.loc[len(df2)] = [df["Child_ID"][ind], df["Exam"][ind],
                                                                      df["Goal"][ind],
                                                                      df["Grade"][ind], learnpath_name1, title,
                                                                      format_refrence,
                                                                      e,
                                                                      df["Subject_tagged"][ind], learnpath_name, id]
-                                                df1 = df1.drop_duplicates()
-                                                df1.to_csv("Embibe_explainers_videos.csv", index=False)
+                                                df2 = df2.drop_duplicates()
+                                                df2.to_csv("Embibe_explainers_videos.csv", index=False)
                                             break
                                         else:
                                             continue
@@ -109,7 +110,7 @@ class Source(object):
                             learnpath_name1, "AND TITLE :", title)
                         print(traceback.format_exc())
                         df2.loc[len(df2)] = [df["Child_ID"][ind], df["Exam"][ind], df["Goal"][ind],
-                                             df["Grade"][ind], learnpath_name1, "", format_refrence,
+                                             df["Grade"][ind], learnpath_name1, title, format_refrence,
                                              e,
                                              df["Subject_tagged"][ind], "", ""]
                         df2 = df2.drop_duplicates()
