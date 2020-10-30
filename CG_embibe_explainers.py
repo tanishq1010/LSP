@@ -60,8 +60,8 @@ class Source(object):
                                     #     print()
                                     if index["format_reference"] == format_refrence:
                                         learnpath_name = index["learnpath_name"]
-                                        l=learnpath_name.upper()
-                                        l1=learnpath_name.upper()
+                                        l = learnpath_name.upper()
+                                        l1 = learnpath_name.upper()
                                         if l.find(l1) == 0:
                                             code = index["code"]
                                             # format_refrence = index["format_reference"]
@@ -78,6 +78,7 @@ class Source(object):
                                                                      df["Subject_tagged"][ind], learnpath_name, id]
                                                 df1 = df1.drop_duplicates()
                                                 df1.to_csv("Embibe_explainers_videos.csv", index=False)
+                                            # break    
                                             except Exception as e:
                                                 # print(e)
                                                 print("EXCEPTION DUE TO SEQUENCE NOT FOUND IN DICTIONARY :")
@@ -92,10 +93,11 @@ class Source(object):
                                                                      df["Subject_tagged"][ind], learnpath_name, id]
                                                 df1 = df1.drop_duplicates()
                                                 df1.to_csv("Embibe_explainers_videos.csv", index=False)
+                                            break    
                                         else:
                                             continue
-                                        
-                                                
+
+
                                     else:
                                         continue
                         else:
