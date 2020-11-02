@@ -50,9 +50,9 @@ if __name__ == '__main__':
     CG_DB_Embibe_explainers(df)
     df12 = pd.read_csv("Embibe_explainers_videos.csv")
     df11 = pd.DataFrame(columns=df12.columns.values)
-    # df12 = pd.DataFrame(columns=df12.columns.values)
+
     df11.to_csv("Embibe_explainers_my_order.csv", index=False)
-    # df12.to_csv("Negative_Embibe_explainers_videos.csv")
+   
 
     for ind in df.index:
         return_correct_sequence(df["Exam"][ind], df["Goal"][ind], df["Learnpath_name"][ind])
