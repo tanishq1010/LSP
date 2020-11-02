@@ -33,6 +33,7 @@ class Source(object):
             "goal": goal,
             "grade": grade,
             "onlyPractise": "false"
+            "fetch_all_content":"true"
         }
         response1 = self.callAPI(
             f"/fiber_ms/v1/home/{subject}",
