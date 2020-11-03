@@ -84,23 +84,33 @@ if __name__ == '__main__':
         # return_correct_sequence(df["Exam"][ind], df["Goal"][ind], df["Learnpath_name"][ind])
         # break
 
+        
+    # df1=pd.read_csv("Embibe_explainers_videos_home.csv")
+    # df2=pd.read_csv("Embibe_explainers_my_order.csv")
+
+
+    # df2.drop(['Sequence','Subject','Learnpath_name'], axis = 1)
+    
+    # df1.drop(['Topic_learnpath_name'], axis = 1)
+
+
+
     # list1 = [""] * len(df)
     # df["Video_sequence_matched"] = list1
     # for ind in df.index:
     #     goal=df["Goal"][ind]
     #     exam=df["Exam"][ind]
     #     main_learnpath=df["Learnpath_name"][ind]
-    #     df1=pd.read_csv("Embibe_explainers_videos_home.csv")
-    #     df2=pd.read_csv("Embibe_explainers_my_order.csv")
-    #
+        
+    
     #     df1 = df1[df1['Goal'].str.contains(goal)]
     #     df1 = df1[df1['Exam'].str.contains(exam)]
     #     df1= df1[df1['main_learnpath'].str.contains(main_learnpath)]
-    #
+    
     #     df2 = df2[df2['Goal'].str.contains(goal)]
     #     df2 = df2[df2['Exam'].str.contains(exam)]
     #     df2 = df2[df2['main_learnpath'].str.contains(main_learnpath)]
-    #
+    
     #     if df1.equals(df2):
     #         df["Video_sequence_matched"][ind]="yes"
     #     else:
